@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Header, MovieList, MovieDetails, Loading } from "./components";
-import dataMovies from "./data";
-import apiMovie from '../src/services/api.movie';
+import apiMovie from "../src/services/api.movie";
 
 class App extends Component {
   constructor(props) {
@@ -9,33 +8,30 @@ class App extends Component {
     this.state = {
       movies: null,
       selectedMovie: 0,
-      loaded: false
+      loaded: false,
     };
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        movies: dataMovies,
-        loaded: true
-      });
-    }, 1000);
-  }
-
-  updateSelectedMovie = index => {
-    this.setState({
-      selectedMovie: index
-    });
-  };
-
-  async componentWillMount(){
+  async componentDidMount() {
     try {
-      const {data} = await apiMovie.get("/discover/movie");
-      console.log("DATA => ", data);
+      const {data: { results }} = await apiMovie.get("/discover/movie");
     } catch (error) {
       console.log("error => ", error);
     }
   }
+
+  updateMovies = (movies) => {
+    this.setState({
+      movies,
+      loaded: true,
+    });
+  };
+
+  updateSelectedMovie = (index) => {
+    this.setState({
+      selectedMovie: index,
+    });
+  };
 
   render() {
     return (
