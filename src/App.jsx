@@ -15,6 +15,16 @@ class App extends Component {
   async componentDidMount() {
     try {
       const {data: { results }} = await apiMovie.get("/discover/movie");
+      console.log("aaaa", results);
+      const movies = results.map( el => {
+        return {
+          img: 'https://image.tmdb.org/t/p/w500' + el.poster_path,
+          title: el.title,
+          details: el.release_date + ' | ' + el.vote_average + ' /10 (' + el.vote_count + ')',
+          description: el.overview
+        }
+      })
+      this.updateMovies(movies);
     } catch (error) {
       console.log("error => ", error);
     }
