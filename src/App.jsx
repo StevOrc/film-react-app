@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-import { Header, MovieList, MovieDetails, Loading } from "./components";
-import apiMovie from "../src/services/api.movie";
+import {
+  Header,
+  MovieList,
+  MovieDetails,
+  Loading,
+  SearchBar,
+} from "./components";
+import apiMovie, { apiMovieMap } from "../src/services/api.movie";
 
 class App extends Component {
   constructor(props) {
@@ -14,16 +20,10 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const {data: { results }} = await apiMovie.get("/discover/movie");
-      console.log("aaaa", results);
-      const movies = results.map( el => {
-        return {
-          img: 'https://image.tmdb.org/t/p/w500' + el.poster_path,
-          title: el.title,
-          details: el.release_date + ' | ' + el.vote_average + ' /10 (' + el.vote_count + ')',
-          description: el.overview
-        }
-      })
+      const {
+        data: { results },
+      } = await apiMovie.get("/discover/movie");
+      const movies = apiMovieMap(results);
       this.updateMovies(movies);
     } catch (error) {
       console.log("error => ", error);
@@ -47,13 +47,14 @@ class App extends Component {
     return (
       <div className="App d-flex flex-column">
         <Header />
+        <SearchBar updateMovies={this.updateMovies} />
         {this.state.loaded ? (
           <div className="d-flex flex-row flex-fill pt-4 p-2">
             <MovieList
               movies={this.state.movies}
               updateSelectedMovie={this.updateSelectedMovie}
             />
-            <MovieDetails movie={this.state.movies[this.state.selectedMovie]} />
+            {/* <MovieDetails movie={this.state.movies[this.state.selectedMovie]} /> */}
           </div>
         ) : (
           <Loading />
