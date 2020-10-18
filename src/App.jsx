@@ -14,7 +14,9 @@ class App extends Component {
     this.state = {
       movies: null,
       selectedMovie: 0,
+      loading: false,
       loaded: false,
+      error: null
     };
   }
 

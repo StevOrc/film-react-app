@@ -8,7 +8,6 @@ const apiMovie = axios.create({
 });
 
 apiMovie.interceptors.request.use((req) => {
-  console.log(`ÌNTERCEPTOR Bearer ${config.Token}`);
   req.headers["Authorization"] = `Bearer ${config.Token}`;
   return req;
 });
