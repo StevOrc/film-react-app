@@ -54,7 +54,7 @@ class App extends Component {
               movies={this.state.movies}
               updateSelectedMovie={this.updateSelectedMovie}
             />
-            {/* <MovieDetails movie={this.state.movies[this.state.selectedMovie]} /> */}
+            <MovieDetails movie={this.state.movies[this.state.selectedMovie]} />
           </div>
         ) : (
           <Loading />

@@ -7,7 +7,7 @@ export default class MovieDetails extends Component {
       <h5>{ this.props.movie.title }</h5>
       <hr className="w-100"/>
       <div>
-        <img alt="movie" className="mx-auto d-block" src={ this.props.movie.img } />
+        <img style={{maxWidth: "200px"}} alt="movie" className="mx-auto d-block" src={ this.props.movie.img } />
       </div>
       <hr className="w-100"/>
       <p className="text-secondary">{ this.props.movie.details }</p>
